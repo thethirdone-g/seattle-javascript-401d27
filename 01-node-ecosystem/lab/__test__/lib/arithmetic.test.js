@@ -11,3 +11,11 @@ describe('Testing the arithmetic module', () => {
     expect(arithmetic('George', 'Miguel')).toBe(null);
   });
 });
+
+describe('Testing the arithmetic module', () => {
+    it('should add the two numbers passed in as parameters', () => {
+        const expected = 20;
+        const actual = arithmetic.add(15,5);
+        expect()
+    })
+})
