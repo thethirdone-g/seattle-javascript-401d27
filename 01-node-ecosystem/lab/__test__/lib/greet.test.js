@@ -1,6 +1,6 @@
 'use strict';
 
-const greet = require ('../../lib/greet.js');
+const greet = require('../../lib/greet.js');
 
 describe('Testing the greet module', () => {
   it('should say the word "hello" before the string that is passed in as a parameter', () => {
