@@ -13,9 +13,18 @@ describe('Testing the arithmetic module', () => {
 });
 
 describe('Testing the arithmetic module', () => {
+<<<<<<< HEAD
   xit('should add the two numbers passed in as parameters', () => {
     const expected = 20;
     const actual = arithmetic.add(15,5);
     expect();
   });
 });
+=======
+    it('should add the two numbers passed in as parameters', () => {
+        const expected = 20;
+        const actual = arithmetic.add(15,5);
+        expect()
+    })
+})
+>>>>>>> Still working on this lab from yesterday
