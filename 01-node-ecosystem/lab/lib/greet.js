@@ -6,9 +6,12 @@
 // The greet function should return null if the input is not a string
 
 module.exports = exports = (str) => {
+// ** module.exports = (str) => { ** is JB's preferred syntax.
   if (typeof(str) === 'string') {
     return `hello ${str}`;
   } else {
     return null;
   }
 };
+
+// ** const greet = module.exports = {}; ** Allie's preferred syntax.

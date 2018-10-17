@@ -8,7 +8,7 @@ const arithmetic = require('./lib/arithmetic.js');
 console.log(greet('world'));
 
 // Call the 'greet' function with a number as a parameter. Null should be returned.
-console.log(greet('4'));
+console.log(greet(4));
 
 // Call the 'arithmetic' function with numbers as parameters. They should add and subtract.
 console.log(arithmetic(15, 5));
