@@ -10,6 +10,7 @@ class Bitmap {
   // parse(buffer) is intended to parse the file buffer's contents
   parse(buffer) {
     this.type = buffer.toString('utf-8', 0, 2);
+    this.buffer = buffer;
   }
   // this function creates a new file path and new file name for this file.
   // call back is the intended function
