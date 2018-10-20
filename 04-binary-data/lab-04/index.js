@@ -2,53 +2,63 @@
 
 const fs = require('fs');
 
-class Bitmap {
-  constructor(filePath) {
-    this.file = filePath;
-  }
-  // buffer is a datatype that is retrieved by using fs.readfile
-  // parse(buffer) is intended to parse the file buffer's contents
-  parse(buffer) {
-    this.type = buffer.toString('utf-8', 0, 2);
-    this.buffer = buffer;
-  }
-  // this function creates a new file path and new file name for this file.
-  // call back is the intended function
-  transform(callback) {
-    transformDictionary[callback](this);
-    this.newFile = this.file.replace(/\.bmp/, `.${callback}.bmp`);
-  }
+function Bitmap(filePath) {
+  this.path = filePath;
 }
-const transformGreyscale = bmp => {
-  console.log('Transforming bitmap into greyscale', bmp);
+
+Bitmap.prototype.parse = function(buffer) {
+  this.type = buffer.toString('utf-8', 0, 2);
+  this.buffer = buffer; // I don't necessarily know what this is doing.
 };
 
-// creating an object containing different methods for transformation
+Bitmap.prototype.transform = function(operation) {
+  transformDictionary[operation](this);
+  this.newFile = this.path.replace(/\.bmp/, `.${operation}.bmp`);
+};
+
+
+// These will help the readAndTransformAndWrite function coming up next.
+const copyFile = (bmp) => {
+  console.log('This will be used to copy the frickin\' file');
+};
+
+const overWrite = (bmp) => {
+  console.log('This will be used to write on top of the frickin\' file');
+  bmp.buffer = Buffer.from('Your frickin\' file has been overwritten');
+};
+
+const colorGoAway = (bmp) => {
+  console.log('This will be used to remove all the color from the frickin\' file');
+  for (let i = 122; i < 1146; i+= 4) {
+    let colorAverage = (bmp.buffer[i] + bmp.buffer[i + 1] + bmp.buffer[i + 2]) /3;
+    bmp.buffer[i] = colorAverage;
+    bmp.buffer[i + 1] = colorAverage;
+    bmp.buffer[i + 2] = colorAverage;
+  }
+};
+
 const transformDictionary = {
-  // To Do : need to make a greyscale transformation function in the future
-  greyscale: transformGreyscale,
+  write: overWrite,
+  copy: copyFile,
+  grey: colorGoAway,
 };
 
-const readAndTransform = () => {
-  // if breaks, try fs.readFile(file, (err, buffer) => {
-  fs.readFile(file, (err, buffer) => {
-    if (err) {
-      throw err;
-    }
-    baldy.parse(buffer);
+function readAndTransformAndWrite() {
+  fs.readFile(path, (err, buffer) => {
+    if (err) throw err;
 
-    // need to create the callback function
-    baldy.transform(callback);
+    kindOfFile.parse(buffer);
 
-    fs.writeFile(baldy.newFile, baldy.buffer, (err, out) => {
+    kindOfFile.transform(operation);
+
+    fs.writeFile(kindOfFile.newFile, kindOfFile.buffer, (err, out) => {
       if (err) throw err;
-      console.log(`BitMap tranformed: ${baldy.newFile}`);
+      console.log(`Bitmap has frickin' transformed: ${kindOfFile.newFile}`);
     });
   });
-};
+}
 
-const [file, callback] = process.argv.slice(2);
+const [path, operation] = process.argv.slice(2); // I don't necessarily know what [] means here.
+let kindOfFile = new Bitmap(path);
 
-let baldy = new Bitmap(file);
-
-readAndTransform();
+readAndTransformAndWrite();
