@@ -30,6 +30,34 @@ const requestHandler = (request, response) => {
       // Here, we have a "POST" request which will always return a JSON object. That object will either be the JSON that you postd in or an error object.
       else if (request.method === 'POST' && request.parsed.pathname === '/data') {
         response.setHeader('Content-Type', 'text/json');
+        response.statusCode = 200;
+        response.statusMessage = 'OK';
+        response.write(JSON.stringify(request.body));
+        response.end();
+        return;
       }
+
+      else {
+        response.setHeader('Content-Type', 'text/html');
+        response.statusCode = 404;
+        response.statusMessage = 'Not Found';
+        response.write('Resource Not Found');
+        response.end();
+      }
+    })
+    .catch(err => {
+      response.writeHead(500);
+      response.write(err);
+      response.end();
     });
+};
+
+// Server Callback
+const app = http.createServer(requestHandler);
+
+// Expose the start and stop methods. Index.js will make use of these.
+
+module.exports = {
+  start: (port, callback) => app.listen(port, callback),
+  stop: (callback) => app.close(callback),
 };
