@@ -1,3 +1,5 @@
+'use strict';
+
 import express from 'express';
 import User from './model.js';
 import auth from './middleware.js';
