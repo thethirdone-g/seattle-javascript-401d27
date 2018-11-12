@@ -9,7 +9,7 @@ const userSchema = new Schema({
 });
 
 userSchema.pre('save', async function() {
-  this.password = await bcrypt.hash('what to do');
+  this.password = await bcrypt.hash('this.password');
 });
 
 // Generate a JWT from the user id and a secret
